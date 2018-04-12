@@ -1,5 +1,5 @@
 import { parseXML } from 'utils/parser';
-import _ from 'utils/underscore';
+import { _isObject, _isString } from 'utils/underscore';
 
 const noop = function() {};
 
@@ -19,7 +19,7 @@ export function crossdomain(uri) {
 }
 
 export function ajax(url, completeCallback, errorCallback, args) {
-    if (_.isObject(url)) {
+    if (_isObject(url)) {
         args = url;
         url = args.url;
     }
@@ -195,7 +195,7 @@ function _ajaxComplete(options) {
 function _jsonResponse(xhr, options) {
     // insure that xhr.response is parsed JSON
     if (!xhr.response ||
-        (_.isString(xhr.response) && xhr.responseText.substr(1) !== '"')) {
+        (_isString(xhr.response) && xhr.responseText.substr(1) !== '"')) {
         try {
             xhr = Object.assign({}, xhr, {
                 response: JSON.parse(xhr.responseText)
