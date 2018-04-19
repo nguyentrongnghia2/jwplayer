@@ -647,25 +647,20 @@ export const isObject = function (obj) {
 };
 
 // Add some isType methods: isFunction, isString, isNumber, isDate, isRegExp.
-const is = [];
-each(['Function', 'String', 'Number', 'Date', 'RegExp'], function (name) {
-    is[name] = function (obj) {
+function is(name) {
+    return function (obj) {
         return toString.call(obj) == '[object ' + name + ']';
-    };
-});
-
-// Optimize `isFunction` if appropriate.
-if (typeof (/./) !== 'function') {
-    is['Function'] = function (obj) {
-        return typeof obj === 'function';
     };
 }
 
-export const isFunction = is['Function'];
-export const isString = is['String'];
-export const isNumber = is['Number'];
-export const isDate = is['Date'];
-export const isRegExp = is['RegExp'];
+export const isString = is('String');
+export const isNumber = is('Number');
+export const isDate = is('Date');
+export const isRegExp = is('RegExp');
+
+export const isFunction = function (obj) {
+    return typeof obj === 'function';
+};
 
 // Is a given object a finite number?
 export const isFinite = function (obj) {
